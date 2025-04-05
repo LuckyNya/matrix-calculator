@@ -1,0 +1,103 @@
+Folder PATH listing for volume Data
+Volume serial number is 1EA1-C2A3
+D:.
+│   .classpath
+│   .project
+│   pom.xml
+│   project_structure.txt
+│   
+├───.settings
+│       .jsdtscope
+│       org.eclipse.jdt.core.prefs
+│       org.eclipse.m2e.core.prefs
+│       org.eclipse.wst.common.component
+│       org.eclipse.wst.common.project.facet.core.xml
+│       org.eclipse.wst.jsdt.ui.superType.container
+│       org.eclipse.wst.jsdt.ui.superType.name
+│       org.eclipse.wst.validation.prefs
+│       
+├───src
+│   └───main
+│       ├───java
+│       │   └───com
+│       │       └───yourpackage
+│       │           ├───models
+│       │           │       ErrorResponse.java
+│       │           │       MatrixRequest.java
+│       │           │       MatrixResponse.java
+│       │           │       
+│       │           ├───operations
+│       │           │       HadamardProduct.java
+│       │           │       KroneckerProduct.java
+│       │           │       MatrixAdder.java
+│       │           │       MatrixDeterminant.java
+│       │           │       MatrixDivider.java
+│       │           │       MatrixInverter.java
+│       │           │       MatrixMultiplier.java
+│       │           │       MatrixOperator.java
+│       │           │       MatrixOperatorFactory.java
+│       │           │       MatrixSubtractor.java
+│       │           │       MatrixTracer.java
+│       │           │       MatrixTransposer.java
+│       │           │       
+│       │           ├───servlets
+│       │           │       MatrixServlet.java
+│       │           │       
+│       │           ├───tcp
+│       │           │       TCPServer.java
+│       │           │       
+│       │           └───udp
+│       │                   UDPServer.java
+│       │                   
+│       ├───resources
+│       └───webapp
+│           │   index.html
+│           │   index.jsp
+│           │   
+│           └───WEB-INF
+│                   web.xml
+│                   
+└───target
+    ├───classes
+    │   └───com
+    │       └───yourpackage
+    │           ├───models
+    │           │       ErrorResponse.class
+    │           │       MatrixRequest.class
+    │           │       MatrixResponse.class
+    │           │       
+    │           ├───operations
+    │           │       HadamardProduct.class
+    │           │       KroneckerProduct.class
+    │           │       MatrixAdder.class
+    │           │       MatrixDeterminant.class
+    │           │       MatrixDivider.class
+    │           │       MatrixInverter.class
+    │           │       MatrixMultiplier.class
+    │           │       MatrixOperator.class
+    │           │       MatrixOperatorFactory.class
+    │           │       MatrixSubtractor.class
+    │           │       MatrixTracer.class
+    │           │       MatrixTransposer.class
+    │           │       
+    │           ├───servlets
+    │           │       MatrixServlet.class
+    │           │       
+    │           ├───tcp
+    │           │       TCPServer.class
+    │           │       
+    │           └───udp
+    │                   UDPServer.class
+    │                   
+    ├───m2e-wtp
+    │   └───web-resources
+    │       └───META-INF
+    │           │   MANIFEST.MF
+    │           │   
+    │           └───maven
+    │               └───com.yourpackage
+    │                   └───MatrixCalculator
+    │                           pom.properties
+    │                           pom.xml
+    │                           
+    └───test-classes
