@@ -2,29 +2,24 @@ package com.yourpackage.tcp;
 
 import java.io.*;
 import java.net.*;
+import com.google.gson.*;
+import com.yourpackage.models.*;
+import com.yourpackage.operations.*;
 
 public class TCPServer {
-    public static void main(String[] args) {
-        ServerSocket serverSocket = null;
-        try {
-            serverSocket = new ServerSocket(1234);
-            System.out.println("TCP Server running on port 1234...");
+    private static final Gson gson = new Gson();
+    private static final MatrixOperatorFactory operatorFactory = new MatrixOperatorFactory();
 
+    public static void main(String[] args) {
+        try (ServerSocket serverSocket = new ServerSocket(1234)) {
+            System.out.println("TCP Server (NEW VERSION) running on port 1234...");
+            
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 new Thread(() -> handleClient(clientSocket)).start();
             }
         } catch (IOException e) {
             System.err.println("TCP Server error: " + e.getMessage());
-        } finally {
-            if (serverSocket != null) {
-                try {
-                    serverSocket.close(); // This fixes the warning
-                    System.out.println("TCP Server socket closed");
-                } catch (IOException e) {
-                    System.err.println("Error closing socket: " + e.getMessage());
-                }
-            }
         }
     }
 
@@ -33,18 +28,26 @@ public class TCPServer {
                 new InputStreamReader(socket.getInputStream()));
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
             
-            String request = in.readLine();
-            System.out.println("TCP Received: " + request);
-            String response = "TCP Result: [[6,8],[10,12]]";
-            out.println(response);
-        } catch (IOException e) {
-            System.err.println("TCP Client handling error: " + e.getMessage());
-        } finally {
-            try {
-                socket.close();
-            } catch (IOException e) {
-                System.err.println("Error closing client socket: " + e.getMessage());
-            }
+            System.out.println("NEW SERVER: Connection received");
+            String requestJson = in.readLine();
+            System.out.println("NEW SERVER: Received: " + requestJson);
+            
+            MatrixRequest request = gson.fromJson(requestJson, MatrixRequest.class);
+            System.out.println("NEW SERVER: Parsed request for operation: " + request.operation);
+            
+            MatrixOperator operator = operatorFactory.getOperator(request.operation);
+            double[][] result = operator.operate(request.matrixA, request.matrixB);
+            
+            MatrixResponse response = new MatrixResponse(result);
+            String responseJson = gson.toJson(response);
+            System.out.println("NEW SERVER: Sending JSON: " + responseJson);
+            
+            out.println(responseJson);
+            System.out.println("NEW SERVER: Response sent");
+            
+        } catch (Exception e) {
+            System.err.println("NEW SERVER: Error handling client: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

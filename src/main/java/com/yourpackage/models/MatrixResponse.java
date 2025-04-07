@@ -1,19 +1,22 @@
-package com.yourpackage.models;  // THIS LINE MUST MATCH THE FOLDER STRUCTURE
+package com.yourpackage.models;
 
-import com.google.gson.Gson;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-@SuppressWarnings("unused")
 public class MatrixResponse {
-    private final double[][] result;
+    private double[][] result;
+    private String error;
     
     public MatrixResponse(double[][] result) {
         this.result = result;
     }
     
-    public void send(HttpServletResponse response) throws IOException {
-        response.setContentType("application/json");
-        new Gson().toJson(this, response.getWriter());
+    public MatrixResponse(String possibleError) {
+        if (possibleError != null && possibleError.startsWith("{")) {
+            // This appears to be JSON, let Gson handle it
+            throw new IllegalArgumentException("Use Gson for JSON parsing");
+        }
+        this.error = possibleError;
     }
+    
+    // Getters
+    public double[][] getResult() { return result; }
+    public String getError() { return error; }
 }

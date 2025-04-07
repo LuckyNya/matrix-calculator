@@ -1,15 +1,17 @@
 package com.yourpackage.servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.google.gson.Gson;
+import com.yourpackage.models.ErrorResponse;
 import com.yourpackage.models.MatrixRequest;
 import com.yourpackage.models.MatrixResponse;
-import com.yourpackage.models.ErrorResponse;
 import com.yourpackage.operations.MatrixOperator;
 import com.yourpackage.operations.MatrixOperatorFactory;
 
