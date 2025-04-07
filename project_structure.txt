@@ -21,6 +21,10 @@ D:.
 │       ├───java
 │       │   └───com
 │       │       └───yourpackage
+│       │           ├───client
+│       │           │       MatrixClient.java
+│       │           │       MatrixClientTest.java
+│       │           │       
 │       │           ├───models
 │       │           │       ErrorResponse.java
 │       │           │       MatrixRequest.java
@@ -41,7 +45,9 @@ D:.
 │       │           │       MatrixTransposer.java
 │       │           │       
 │       │           ├───servlets
+│       │           │       MatrixCalculationServlet.java
 │       │           │       MatrixServlet.java
+│       │           │       TcpUdpBridgeServlet.java
 │       │           │       
 │       │           ├───tcp
 │       │           │       TCPServer.java
@@ -51,16 +57,21 @@ D:.
 │       │                   
 │       ├───resources
 │       └───webapp
-│           │   index.html
 │           │   index.jsp
 │           │   
 │           └───WEB-INF
 │                   web.xml
 │                   
 └───target
+    │   MatrixCalculator.war
+    │   
     ├───classes
     │   └───com
     │       └───yourpackage
+    │           ├───client
+    │           │       MatrixClient.class
+    │           │       MatrixClientTest.class
+    │           │       
     │           ├───models
     │           │       ErrorResponse.class
     │           │       MatrixRequest.class
@@ -81,7 +92,9 @@ D:.
     │           │       MatrixTransposer.class
     │           │       
     │           ├───servlets
+    │           │       MatrixCalculationServlet.class
     │           │       MatrixServlet.class
+    │           │       TcpUdpBridgeServlet.class
     │           │       
     │           ├───tcp
     │           │       TCPServer.class
@@ -89,6 +102,8 @@ D:.
     │           └───udp
     │                   UDPServer.class
     │                   
+    ├───generated-sources
+    │   └───annotations
     ├───m2e-wtp
     │   └───web-resources
     │       └───META-INF
@@ -100,4 +115,61 @@ D:.
     │                           pom.properties
     │                           pom.xml
     │                           
+    ├───MatrixCalculator
+    │   │   index.html
+    │   │   index.jsp
+    │   │   
+    │   ├───META-INF
+    │   └───WEB-INF
+    │       │   web.xml
+    │       │   
+    │       ├───classes
+    │       │   └───com
+    │       │       └───yourpackage
+    │       │           ├───client
+    │       │           │       MatrixClient.class
+    │       │           │       MatrixClientTest.class
+    │       │           │       
+    │       │           ├───models
+    │       │           │       ErrorResponse.class
+    │       │           │       MatrixRequest.class
+    │       │           │       MatrixResponse.class
+    │       │           │       
+    │       │           ├───operations
+    │       │           │       HadamardProduct.class
+    │       │           │       KroneckerProduct.class
+    │       │           │       MatrixAdder.class
+    │       │           │       MatrixDeterminant.class
+    │       │           │       MatrixDivider.class
+    │       │           │       MatrixInverter.class
+    │       │           │       MatrixMultiplier.class
+    │       │           │       MatrixOperator.class
+    │       │           │       MatrixOperatorFactory.class
+    │       │           │       MatrixSubtractor.class
+    │       │           │       MatrixTracer.class
+    │       │           │       MatrixTransposer.class
+    │       │           │       
+    │       │           ├───servlets
+    │       │           │       MatrixServlet.class
+    │       │           │       
+    │       │           ├───tcp
+    │       │           │       TCPServer.class
+    │       │           │       
+    │       │           └───udp
+    │       │                   UDPServer.class
+    │       │                   
+    │       └───lib
+    │               commons-math3-3.6.1.jar
+    │               gson-2.8.9.jar
+    │               
+    ├───maven-archiver
+    │       pom.properties
+    │       
+    ├───maven-status
+    │   └───maven-compiler-plugin
+    │       └───compile
+    │           └───default-compile
+    │                   createdFiles.lst
+    │                   inputFiles.lst
+    │                   
     └───test-classes
