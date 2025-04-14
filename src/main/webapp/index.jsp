@@ -3,43 +3,84 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500&display=swap" rel="stylesheet">
     <title>Matrix Calculator</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f5f5f5;
-        }
-        .calculator-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            width: 80%;
-            max-width: 900px;
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
+	        transform: scale(1.5);
+		    transform-origin: 0 0;
+		    width: 66.67%;
+		    font-family: 'Be Vietnam Pro', Arial, sans-serif;
+		    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) fixed; /* Add 'fixed' */
+		    min-height: 100vh;
+		    margin: 0;
+		    padding: 20px;
+		    box-sizing: border-box;
+		    position: relative;
+		    overflow-x: hidden;
+		}
+		
+		html {
+		    height: 100%;
+		    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Match body background */
+		}
+	    
+	    .calculator-container {
+	        background-color: white;
+		    border-radius: 15px;
+		    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+		    padding: 30px;
+		    margin: 20px auto;
+		    max-width: 800px;
+		    border: 1px solid #e0e0e0;
+	    }
+	    
+	    h1 {
+	        color: #2c3e50;
+	        margin-bottom: 25px;
+	        font-size: 1.8em;
+	    }
         .control-panel {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             justify-content: center;
             margin-bottom: 20px;
+            display: grid;
+    		grid-template-columns: 1fr 1fr;
         }
         .control-group {
             display: flex;
             flex-direction: column;
             gap: 5px;
         }
+        .matrix-control-group {
+		    display: flex;
+		    gap: 10px;
+		}
+		.control-group.compact {
+		    margin-bottom: 0;
+		}
+		
+		.control-group.compact label {
+		    min-width: 50px;
+		    text-align: right;
+		}
+		
+		.control-group.compact input {
+		    width: 50px;
+		}
+		
+		.control-group.full-width {
+		    grid-column: span 2;
+		}
+		.protocol-options {
+		    display: flex;
+		    gap: 15px;
+		    align-items: center;
+		    margin: 5px 0;
+		}
         label {
             font-weight: bold;
             color: #2c3e50;
@@ -56,21 +97,26 @@
             border-radius: 4px;
         }
         button {
-            padding: 10px 15px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
+	        background-color: #3498db;
+	        color: white;
+	        border: none;
+	        padding: 10px 15px;
+	        border-radius: 6px;
+	        cursor: pointer;
+	        font-family: inherit;
+	        font-weight: bold;
+	        transition: all 0.3s;
+	    }
+	    
+	    button:hover {
+	        background-color: #2980b9;
+	        transform: translateY(-2px);
+	        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+	    }
         .matrix-container {
             display: flex;
-            gap: 30px;
+    		flex-wrap: wrap;
+            gap: 10px;
             margin-bottom: 20px;
             justify-content: center;
         }
@@ -79,6 +125,11 @@
             padding: 15px;
             border-radius: 5px;
             background-color: #f9f9f9;
+            max-width: 100%;
+		    overflow-x: auto;
+		    display: inline-block;
+		    white-space: nowrap;
+		    padding-bottom: 15px;
         }
         .matrix h3 {
             margin-top: 0;
@@ -86,19 +137,34 @@
             text-align: center;
         }
         .matrix-input {
-            width: 60px;
-            margin: 3px;
-            padding: 5px;
+            width: 40px;  /* Reduce from 60px */
+		    margin: 2px;  /* Reduce from 3px */
+		    padding: 3px; /* Reduce from 5px */
+		    font-size: 12px;
             border: 1px solid #ddd;
             border-radius: 3px;
         }
-        #result {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
+       #result {
+		    margin-top: 30px;
+		    padding: 20px;
+		    background-color: #f9f9f9;
+		    border-radius: 5px;
+		    border: 1px solid #ddd;
+		    max-height: 50vh; /* Limits height */
+		    overflow-y: auto; /* Adds scroll if needed */
+		}
+		.result-input {
+		    width: 60px;          /* Same as matrix-input */
+		    height: 28px;         /* Same height */
+		    margin: 3px;          /* Same margin */
+		    padding: 5px;         /* Same padding */
+		    border: 1px solid #ddd;
+		    border-radius: 3px;
+		    text-align: center;
+		    font-size: 14px;      /* Same font size */
+		    background-color: white;
+		    box-sizing: border-box;
+		}
         .error {
             color: #e74c3c;
             margin: 10px 0;
@@ -108,11 +174,12 @@
             border-radius: 4px;
         }
         #result table {
-            border-collapse: collapse;
-            margin: 0 auto;
+            border-collapse: separate;
+		    border-spacing: 0;
+		    margin: 0 auto;
         }
         #result td {
-            padding: 8px 12px;
+            padding: 0;
             text-align: center;
             border: 1px solid #ddd;
             background-color: white;
@@ -131,7 +198,20 @@
     		text-align: center;
     		padding: 20px;
     		font-weight: bold;
-}
+		}
+		@media (max-width: 768px) {
+		    .result-input {
+		        width: 50px;
+		        font-size: 12px;
+		        padding: 3px;
+		    }
+		}
+	    @media (max-width: 480px) {
+		    .result-input {
+		        width: 40px;
+		        font-size: 11px;
+		    }
+		}
     </style>
 </head>
 <body>
@@ -139,71 +219,70 @@
         <h1>Matrix Calculator</h1>
         
         <div class="control-panel">
-            <div class="control-group">
-                <label>Operation:</label>
-				<select id="operation" onchange="updateMatrixInputs()">
-				    <option value="add">Addition (A+B)</option>
-				    <option value="subtract">Subtraction (A-B)</option>
-				    <option value="multiply">Multiplication (A&times;B)</option>
-				    <option value="hadamard">Hadamard Product (A&#8728;B)</option>
-				    <option value="kronecker">Kronecker Product (A&#8855;B)</option>
-				    <option value="divide">Division (A/B)</option>
-				    <option value="transpose">Transpose (A&#x1D40;)</option>
-				    <option value="determinant">Determinant (|A|)</option>
-				    <option value="inverse">Inverse (A&#8315;&#185;)</option>
-				    <option value="trace">Trace (tr(A))</option>
+            <div class="control-group full-width">
+		        <label id="operation-label">Phép toán:</label>
+		        <select id="operation" onchange="updateMatrixInputs()">
+				    <option value="add">Cộng (A+B)</option>
+				    <option value="subtract">Trừ (A-B)</option>
+				    <option value="multiply">Nhân (A&times;B)</option>
+				    <option value="hadamard">Nhân Hadamard (A&#8728;B)</option>
+				    <option value="kronecker">Nhân Kronecker (A&#8855;B)</option>
+				    <option value="divide">Chia (A/B)</option>
+				    <option value="transpose">Chuyển vị (A&#x1D40;)</option>
+				    <option value="determinant">Định thức (|A|)</option>
+				    <option value="inverse">Khả nghịch (A&#8315;&#185;)</option>
+				    <option value="trace">Vết ma trận (tr(A))</option>
 				</select>
             </div>
             
-            <div class="control-group" id="matrixAControls">
-                <label>Matrix A Rows:</label>
-                <input type="number" id="rowsA" min="1" max="10" value="2">
-            </div>
+            <div class="matrix-control-group">
+		        <div class="control-group compact">
+		            <label id="rowsA-label">Hàng A:</label>
+		            <input type="number" id="rowsA" min="1" max="10" value="2">
+		        </div>
+		        <div class="control-group compact">
+		            <label id="colsA-label">Cột A:</label>
+		            <input type="number" id="colsA" min="1" max="10" value="2">
+		        </div>
+		    </div>
+		    
+		    <!-- Matrix B Controls -->
+		    <div class="matrix-control-group" id="matrixBControls">
+		        <div class="control-group compact">
+		            <label id="rowsB-label">Hàng B:</label>
+		            <input type="number" id="rowsB" min="1" max="10" value="2">
+		        </div>
+		        <div class="control-group compact" id="matrixBColsControls">
+		            <label id="colsB-label">Cột B:</label>
+		            <input type="number" id="colsB" min="1" max="10" value="2">
+		        </div>
+		    </div>
             
-            <div class="control-group" id="matrixAColsControls">
-                <label>Matrix A Columns:</label>
-                <input type="number" id="colsA" min="1" max="10" value="2">
-            </div>
-            
-            <div class="control-group" id="matrixBControls">
-                <label>Matrix B Rows:</label>
-                <input type="number" id="rowsB" min="1" max="10" value="2">
-            </div>
-            
-            <div class="control-group" id="matrixBColsControls">
-                <label>Matrix B Columns:</label>
-                <input type="number" id="colsB" min="1" max="10" value="2">
-            </div>
-            
-            <div class="control-group">
-    			<label>Protocol:</label>
-    			<div>
-        			<input type="radio" id="tcp" name="protocol" value="tcp" checked>
-        			<label for="tcp">TCP</label>
-        			<input type="radio" id="udp" name="protocol" value="udp">
-        			<label for="udp">UDP</label>
-    			</div>
-			</div>
-            
-            <div class="control-group">
-                <label>&nbsp;</label>
-                <button onclick="createMatrixInputs()">Create Matrices</button>
-            </div>
+            <div class="control-group full-width">
+		        <label id="protocol-label">Giao thức:</label>
+		        <div class="protocol-options">
+		            <input type="radio" id="tcp" name="protocol" value="tcp" checked>
+		            <label for="tcp" id="tcp-label">TCP</label>
+		            <input type="radio" id="udp" name="protocol" value="udp">
+		            <label for="udp" id="udp-label">UDP</label>
+		        </div>
+		        <button id="create-matrices-btn" onclick="createMatrixInputs()">Tạo Ma Trận</button>
+   			</div>
         </div>
         
         <div class="matrix-container">
-            <div class="matrix" id="matrixA">
-                <h3>Matrix A</h3>
-            </div>
-            <div class="matrix" id="matrixB">
-                <h3>Matrix B</h3>
-            </div>
-        </div>
+		    <div class="matrix" id="matrixA">
+		        <h3>Ma trận A</h3>
+		    </div>
+		    <div class="matrix" id="matrixB">
+		        <h3>Ma trận B</h3>
+		    </div>
+		</div>
         
         <div class="button-group">
-            <button type="button" onclick="fillRandom()">Fill Random Numbers</button>
-            <button onclick="loadSampleMatrix()">Load Sample Matrix</button>
-            <button onclick="calculate()">Calculate</button>
+            <button id="fill-random-btn" type="button" onclick="fillRandom()">Điền Số Ngẫu Nhiên</button>
+            <button id="load-sample-btn" onclick="loadSampleMatrix()">Tải Ma Trận Mẫu</button>
+            <button id="calculate-btn" onclick="calculate()">Tính Toán</button>
         </div>
         
         <div id="result"></div>
@@ -230,9 +309,9 @@
 		    // Adjust Matrix B title for unary operations
 		    const matrixBTitle = document.querySelector('#matrixB h3');
 		    if (needsSingleMatrix) {
-		        matrixBTitle.textContent = 'Result Preview';
+		        matrixBTitle.textContent = 'Xem trước kết quả';
 		    } else {
-		        matrixBTitle.textContent = 'Matrix B';
+		        matrixBTitle.textContent = 'Ma trận B';
 		    }
 		    
 		    // Special cases for square matrices
@@ -262,15 +341,15 @@
 		        createMatrix('matrixB', rowsB, colsB);
 		        document.getElementById('matrixB').classList.remove('hidden');
 		    } else {
-		        document.getElementById('matrixB').innerHTML = '<h3>Result Preview</h3>';
+		        document.getElementById('matrixB').innerHTML = '<h3>Xem trước kết quả</h3>';
 		        document.getElementById('matrixB').classList.add('hidden');
 		    }
 		}
         
         function createMatrix(containerId, rows, cols) {
             const container = document.getElementById(containerId);
-            container.innerHTML = `<h3>${containerId === 'matrixA' ? 'Matrix A' : 'Matrix B'}</h3>`;
-            
+            const title = containerId === 'matrixA' ? 'Ma trận A' : 'Ma trận B';
+            container.innerHTML = `<h3>${title}</h3>`;
             for (let i = 0; i < rows; i++) {
                 for (let j = 0; j < cols; j++) {
                     const input = document.createElement('input');
@@ -375,7 +454,7 @@
             }
             
             // Show loading indicator
-            document.getElementById("result").innerHTML = '<div class="loading">Calculating...</div>';
+            document.getElementById("result").innerHTML = '<div class="loading">Đang tính toán...</div>';
             
             // Send to our JSP backend which will handle TCP/UDP
             fetch("<%= request.getContextPath() %>/calculate", {
@@ -401,20 +480,31 @@
                 return response.json();
             })
             .then(data => {
-                if (data.error) {
-                    document.getElementById("result").innerHTML = 
-                        `<div class="error">Error: ${data.error}</div>`;
-                } else {
-                    displayResult(data.result, 
-                        data.result.length, 
-                        data.result[0]?.length || 1
-                    );
-                }
-            })
-            .catch(error => {
-                document.getElementById("result").innerHTML = 
-                    `<div class="error">${error.message || "Server error"}</div>`;
-            });
+			    // Handle both JSON success and plain text errors
+			    if (typeof data === 'string' || data.error) {
+			        const errorMessage = typeof data === 'string' ? data : data.error;
+			        document.getElementById("result").innerHTML = 
+			            `<div class="error">Lỗi: ${errorMessage}</div>`;
+			    } else {
+			        displayResult(data.result, 
+			            data.result.length, 
+			            data.result[0]?.length || 1
+			        );
+			    }
+			})
+			.catch(error => {
+			    try {
+			        // Try to parse error message from JSON
+			        const errorObj = JSON.parse(error.message);
+			        const cleanError = errorObj.error || error.message;
+			        document.getElementById("result").innerHTML = 
+			            `<div class="error">Lỗi: ${cleanError}</div>`;
+			    } catch (e) {
+			        // If not JSON, show original message
+			        document.getElementById("result").innerHTML = 
+			            `<div class="error">Lỗi kết nối: ${error.message || "Không thể kết nối tới máy chủ"}</div>`;
+			    }
+			});
         }
         
         function getMatrixValues(prefix, rows, cols) {
@@ -431,13 +521,15 @@
         }
         
         function displayResult(matrix, rows, cols) {
-            let html = "<h3>Result</h3><table>";
+            let html = `<h3>Kết quả</h3><table style="font-size: inherit;">`;
             for (let i = 0; i < rows; i++) {
                 html += "<tr>";
                 for (let j = 0; j < cols; j++) {
                     const value = matrix[i][j];
-                    // Show as integer if no decimal, otherwise show 2 decimal places
-                    html += `<td>${Number.isInteger(value) ? value : value.toFixed(2)}</td>`;
+                    // Match the input styling exactly
+                    html += `<td><input type="text" class="result-input" value="${
+                        Number.isInteger(value) ? value : value.toFixed(2)
+                    }" readonly></td>`;
                 }
                 html += "</tr>";
             }

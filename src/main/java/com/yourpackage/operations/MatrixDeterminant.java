@@ -6,7 +6,7 @@ public class MatrixDeterminant implements MatrixOperator {
     @Override
     public double[][] operate(double[][] a, double[][] b) {
         if (a.length != a[0].length) {
-            throw new IllegalArgumentException("Matrix must be square");
+            throw new IllegalArgumentException("Ma trận phải vuông");
         }
         double det = calculateDeterminant(a);
         return new double[][]{{det}}; // Return as 1x1 matrix

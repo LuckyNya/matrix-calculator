@@ -6,7 +6,7 @@ public class HadamardProduct implements MatrixOperator {
     @Override
     public double[][] operate(double[][] a, double[][] b) {
         if (a.length != b.length || a[0].length != b[0].length) {
-            throw new IllegalArgumentException("Matrices must have identical dimensions");
+            throw new IllegalArgumentException("Ma trận phải có cùng chiều");
         }
         double[][] result = new double[a.length][a[0].length];
         for (int i = 0; i < a.length; i++) {

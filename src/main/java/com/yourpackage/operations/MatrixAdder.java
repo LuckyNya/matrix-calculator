@@ -10,9 +10,7 @@ public class MatrixAdder implements MatrixOperator {
     public double[][] operate(double[][] a, double[][] b) {
         if (a.length != b.length || a[0].length != b[0].length) {
             throw new IllegalArgumentException(
-                "For " + getOperationName() + ", matrices must have identical dimensions. " +
-                "Received: " + a.length + "x" + a[0].length + " and " + 
-                b.length + "x" + b[0].length
+            		"Ma trận phải có cùng chiều"
             );
         }
         

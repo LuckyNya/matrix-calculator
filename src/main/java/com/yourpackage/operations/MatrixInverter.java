@@ -7,7 +7,7 @@ public class MatrixInverter implements MatrixOperator {
     public double[][] operate(double[][] a, double[][] b) {
         MatrixDeterminant detCalculator = new MatrixDeterminant();
         double det = detCalculator.operate(a, null)[0][0];
-        if (det == 0) throw new IllegalArgumentException("Matrix is singular (determinant = 0)");
+        if (det == 0) throw new IllegalArgumentException("Ma trận được nhập suy biến( Định thức = 0)");
         
         double[][] inverse = new double[a.length][a.length];
         invertRecursive(a, inverse, det, 0, 0);

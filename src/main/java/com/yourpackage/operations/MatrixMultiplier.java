@@ -10,8 +10,7 @@ public class MatrixMultiplier implements MatrixOperator {
     public double[][] operate(double[][] a, double[][] b) {
         if (a[0].length != b.length) {
             throw new IllegalArgumentException(
-                "For " + getOperationName() + ", columns of first matrix (" + a[0].length + ") " +
-                "must match rows of second matrix (" + b.length + ")"
+                "Số cột ma trận A phải bằng số hàng ma trận B"
             );
         }
         

@@ -22,6 +22,10 @@ public class MatrixCalculationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
+    	request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
+        
         try {
             // Parse the JSON request
             JsonObject json = gson.fromJson(request.getReader(), JsonObject.class);
@@ -33,19 +37,35 @@ public class MatrixCalculationServlet extends HttpServlet {
             MatrixResponse matrixResponse;
             
             // Call appropriate protocol
-            if ("tcp".equalsIgnoreCase(protocol)) {
-                matrixResponse = client.sendViaTCP(matrixRequest);
-            } else {
-                matrixResponse = client.sendViaUDP(matrixRequest);
+            try {
+                if ("tcp".equalsIgnoreCase(protocol)) {
+                    matrixResponse = client.sendViaTCP(matrixRequest);
+                } else {
+                    matrixResponse = client.sendViaUDP(matrixRequest);
+                }
+                
+                // If response contains error, set appropriate status
+                if (matrixResponse.getError() != null) {
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                }
+                
+                gson.toJson(matrixResponse, response.getWriter());
+                
+            } catch (IOException e) {
+                // Handle connection errors
+                MatrixResponse errorResponse = new MatrixResponse(
+                    e.getMessage()
+                );
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                gson.toJson(errorResponse, response.getWriter());
             }
             
-            // Send response back
-            response.setContentType("application/json");
-            gson.toJson(matrixResponse, response.getWriter());
-            
         } catch (Exception e) {
+            MatrixResponse errorResponse = new MatrixResponse(
+                "Lỗi yêu cầu không hợp lệ: " + e.getMessage()
+            );
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write(e.getMessage());
+            gson.toJson(errorResponse, response.getWriter());
         }
     }
 }

@@ -22,30 +22,22 @@ public class MatrixClient {
 
     // TCP Implementation
     public MatrixResponse sendViaTCP(MatrixRequest request) throws IOException {
-        System.out.println("CLIENT: Connecting to " + serverHost + ":" + tcpPort);
-        
         try (Socket socket = new Socket(serverHost, tcpPort);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(
-                 new InputStreamReader(socket.getInputStream()))) {
+             PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))) {
             
-            String requestJson = gson.toJson(request);
-            System.out.println("CLIENT: Sending request: " + requestJson);
-            out.println(requestJson);
+            out.println(gson.toJson(request));
+            String response = in.readLine();
             
-            String responseJson = in.readLine();
-            System.out.println("CLIENT: Raw response: " + responseJson);
-            
-            if (responseJson == null) {
-                throw new IOException("Empty response from server");
+            if (response == null) {
+                throw new IOException("Không nhận được phản hồi");
             }
             
-            // Check if response is JSON
-            if (!responseJson.trim().startsWith("{")) {
-                throw new IOException("Server returned non-JSON response: " + responseJson);
+            try {
+                return gson.fromJson(response, MatrixResponse.class);
+            } catch (JsonSyntaxException e) {
+                return new MatrixResponse(response);
             }
-            
-            return gson.fromJson(responseJson, MatrixResponse.class);
         }
     }
 
